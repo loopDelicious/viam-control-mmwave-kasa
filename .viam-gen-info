@@ -1,0 +1,12 @@
+{
+  "module_name": "mmwave-kasa",
+  "namespace": "joyce",
+  "language": "python",
+  "resource_type": "service",
+  "resource_subtype": "generic",
+  "model_name": "mmwave-kasa",
+  "enable_cloud_build": false,
+  "initialize_git": false,
+  "generator_version": "0.1.0",
+  "generated_on": "2025-02-20T18:00:39.32183Z"
+}

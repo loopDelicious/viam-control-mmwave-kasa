@@ -1,0 +1,17 @@
+{
+  "$schema": "https://dl.viam.dev/module.schema.json",
+  "module_id": "joyce:mmwave-kasa",
+  "visibility": "private",
+  "url": "",
+  "description": "Modular generic service: mmwave-kasa",
+  "models": [
+    {
+      "api": "rdk:service:generic",
+      "model": "joyce:mmwave-kasa:mmwave-kasa",
+      "short_description": "Provide a short (100 characters or less) description of this model here",
+      "markdown_link": "README.md#model-joycemmwave-kasammwave-kasa"
+    }
+  ],
+  "entrypoint": "./run.sh",
+  "first_run": ""
+}
