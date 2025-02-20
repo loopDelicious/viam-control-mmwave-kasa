@@ -1,6 +1,6 @@
 # Module mmwave-kasa 
 
-Use an mmwave sensor to detect presence to turn on and off a TP-link Kasa smart plug.
+The [`mmwave-kasa`](https://app.viam.com/module/joyce/mmwave-kasa) module uses an LD2410C mmwave sensor to detect presence to turn on and off a TP-link Kasa smart plug.
 
 ## Model joyce:mmwave-kasa:mmwave-kasa
 
@@ -33,4 +33,4 @@ The following attributes are available for this model:
   "kasa": "kasa-switch"
 }
 ```
-
+![configure Kasa smart switch](./kasaConfig.png)
