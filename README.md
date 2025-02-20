@@ -1,18 +1,18 @@
 # Module mmwave-kasa 
 
-Provide a description of the purpose of the module and any relevant information.
+Use an mmwave sensor to detect presence to turn on and off a TP-link Kasa smart plug.
 
 ## Model joyce:mmwave-kasa:mmwave-kasa
 
-Provide a description of the model and any relevant information.
+Turn on a light when you enter a room, and turn it off when you leave. This uses an LD2410C mmwave sensor and Tp-Link Kasa smart plug.
 
 ### Configuration
 The following attribute template can be used to configure this model:
 
 ```json
 {
-"attribute_1": <float>,
-"attribute_2": <string>
+"sensor": <float>,
+"kasa": <string>
 }
 ```
 
@@ -22,29 +22,15 @@ The following attributes are available for this model:
 
 | Name          | Type   | Inclusion | Description                |
 |---------------|--------|-----------|----------------------------|
-| `attribute_1` | float  | Required  | Description of attribute 1 |
-| `attribute_2` | string | Optional  | Description of attribute 2 |
+| `sensor` | string  | Required  | The name of the mmwave sensor component in the Viam app|
+| `kasa` | string | Required  | The name of the Kasa generic component in the Viam app |
 
 #### Example Configuration
 
 ```json
 {
-  "attribute_1": 1.0,
-  "attribute_2": "foo"
+  "sensor": "mmwave-sensor",
+  "kasa": "kasa-switch"
 }
 ```
 
-### DoCommand
-
-If your model implements DoCommand, provide an example payload of each command that is supported and the arguments that can be used. If your model does not implement DoCommand, remove this section.
-
-#### Example DoCommand
-
-```json
-{
-  "command_name": {
-    "arg1": "foo",
-    "arg2": 1
-  }
-}
-```
