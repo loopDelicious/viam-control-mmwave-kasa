@@ -1,14 +1,14 @@
 {
   "$schema": "https://dl.viam.dev/module.schema.json",
   "module_id": "joyce:mmwave-kasa",
-  "visibility": "private",
-  "url": "",
+  "visibility": "public",
+  "url": "https://github.com/loopDelicious/viam-control-mmwave-kasa",
   "description": "Modular generic service: mmwave-kasa",
   "models": [
     {
       "api": "rdk:service:generic",
       "model": "joyce:mmwave-kasa:mmwave-kasa",
-      "short_description": "Provide a short (100 characters or less) description of this model here",
+      "short_description": "Use an mmwave sensor to detect presence to turn on and off a TP-link Kasa smart plug.",
       "markdown_link": "README.md#model-joycemmwave-kasammwave-kasa"
     }
   ],

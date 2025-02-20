@@ -64,9 +64,6 @@ class MmwaveKasa(GenericServiceBase, EasyResource):
         )
         self.kasa = cast(GenericComponent, kasa_resource)
 
-        # LOGGER.info(f"Kasa component initialized: {self.kasa}")
-
-        # Start the loop if auto_start is enabled
         if self.auto_start:
             self.start()
 
@@ -87,34 +84,38 @@ class MmwaveKasa(GenericServiceBase, EasyResource):
 
                 if presence_detected:
                     if not self.light_on:
-                        LOGGER.info("Presence detected! Attempting to turn Kasa Plug ON.")
+                        LOGGER.info("Presence detected! Turning Kasa Plug ON.")
                         try:
-                            LOGGER.info(f"Sending turn_on command to Kasa: {self.kasa}")
-                            response = await self.kasa.do_command({"turn_on": []})
-                            LOGGER.info(f"Kasa turn_on command sent. Response: {response}")
-                            self.light_on = True  # Track that light is ON
+                            response = await self.kasa.do_command({"toggle_on": []})
+                            LOGGER.info(f"Kasa toggle_on command sent. Response: {response}")
+                            self.light_on = True  # Mark light as ON
                         except Exception as e:
-                            LOGGER.error(f"Failed to send turn_on command to Kasa: {e}")
+                            LOGGER.error(f"Failed to turn on Kasa plug: {e}")
+
+                    # Reset any pending turn-off task
+                    if self.turn_off_task and not self.turn_off_task.done():
+                        LOGGER.info("Presence detected again - canceling turn-off task.")
+                        self.turn_off_task.cancel()
 
                 else:
-                    # Schedule turning off after 30 seconds
-                    if not self.turn_off_task or self.turn_off_task.done():
-                        LOGGER.info("No presence detected. Scheduling turn off in 30 seconds.")
+                    if self.light_on and (not self.turn_off_task or self.turn_off_task.done()):
+                        LOGGER.info("No presence detected. Scheduling turn off in 10 seconds.")
                         self.turn_off_task = asyncio.create_task(self.delayed_turn_off())
 
             except Exception as e:
                 LOGGER.error(f"Error updating Kasa plug: {e}")
 
-            await asyncio.sleep(1)  # Keep checking every second
+            await asyncio.sleep(1)  # Check every second
 
     async def delayed_turn_off(self):
-        """Delays turning off the Kasa plug if no presence is detected for 30 seconds."""
+        """Delays toggling off the Kasa plug if no presence is detected for 10 seconds."""
         try:
-            await asyncio.sleep(30)  # Wait 30 seconds before turning off
-            LOGGER.info("Turning Kasa Plug OFF after 30 seconds of no presence.")
-            await self.kasa.do_command({"turn_off": []})
+            await asyncio.sleep(10)  # Wait 10 seconds before turning off
+            LOGGER.info("Toggling Kasa Plug OFF after 10 seconds of no presence.")
+            await self.kasa.do_command({"toggle_off": []})
+            self.light_on = False  # Mark light as OFF
         except asyncio.CancelledError:
-            LOGGER.info("Turn-off task was canceled because presence was detected again.")
+            LOGGER.info("Toggle-off task was canceled because presence was detected again.")
 
     def start(self):
         """Start background loop only if not already running."""
